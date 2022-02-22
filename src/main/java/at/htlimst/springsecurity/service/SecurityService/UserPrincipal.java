@@ -1,5 +1,6 @@
 package at.htlimst.springsecurity.service.SecurityService;
 
+import at.htlimst.springsecurity.dto.UserPojo;
 import at.htlimst.springsecurity.model.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -11,9 +12,9 @@ import java.util.List;
 
 public class UserPrincipal implements UserDetails {
 
-    private User user;
+    private UserPojo user;
 
-    public UserPrincipal(User user){
+    public UserPrincipal(UserPojo user){
         this.user = user;
     }
 
@@ -37,7 +38,7 @@ public class UserPrincipal implements UserDetails {
 
     @Override
     public String getUsername() {
-        return this.user.getEmail();
+        return this.user.getUsername();
     }
 
     @Override

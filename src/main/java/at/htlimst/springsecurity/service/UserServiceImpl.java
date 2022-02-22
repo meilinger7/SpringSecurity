@@ -2,6 +2,7 @@ package at.htlimst.springsecurity.service;
 
 import at.htlimst.springsecurity.dto.UserRegistrationDto;
 import at.htlimst.springsecurity.model.Role;
+import at.htlimst.springsecurity.model.RoleType;
 import at.htlimst.springsecurity.model.User;
 import at.htlimst.springsecurity.repository.RoleRepository;
 import at.htlimst.springsecurity.repository.UserRepository;
@@ -24,16 +25,14 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl implements UserService{
 
     private UserRepository userRepository;
-
-    @Autowired
     private BCryptPasswordEncoder passwordEncoder;
-
-    @Autowired
     private RoleRepository roleRepository;
 
-    public UserServiceImpl(UserRepository userRepository) {
-        super();
+    @Autowired
+    public UserServiceImpl(UserRepository userRepository, BCryptPasswordEncoder passwordEncoder, RoleRepository roleRepository) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+        this.roleRepository = roleRepository;
     }
 
     @Override
@@ -43,7 +42,7 @@ public class UserServiceImpl implements UserService{
         user.setLastName(registrationDto.getLastName());
         user.setEmail(registrationDto.getEmail());
         user.setPassword(passwordEncoder.encode(registrationDto.getPassword()));
-        user.setRoles(Arrays.asList(roleRepository.findByName("ROLE_USER")));
+        user.setRoles(Arrays.asList(roleRepository.findByName(String.valueOf(RoleType.ROLE_USER))));
 
         return userRepository.save(user);
     }

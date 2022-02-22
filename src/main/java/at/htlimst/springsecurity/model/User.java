@@ -27,7 +27,10 @@ public class User {
     @Column(name = "last_name")
     private String lastName;
 
+    @Column(nullable = false)
     private String email;
+
+    @Column(nullable = false)
     private String password;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)

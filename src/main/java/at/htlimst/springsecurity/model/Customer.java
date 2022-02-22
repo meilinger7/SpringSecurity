@@ -28,7 +28,10 @@ public class Customer {
     @Column(name = "last_name")
     private String lastName;
 
+    @Column(nullable = false)
     private String email;
+
+    @Column(nullable = false)
     private String password;
 
 

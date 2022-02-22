@@ -13,12 +13,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/registration")
 public class UserRegistrationController {
 
+    public UserService userService;
+
     public UserRegistrationController(UserService userService) {
-        super();
         this.userService = userService;
     }
 
-    public UserService userService;
+
 
     @ModelAttribute("user")
     public UserRegistrationDto userRegistrationDto(){
