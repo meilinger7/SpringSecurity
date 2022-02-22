@@ -30,10 +30,22 @@ public class UserPrincipalDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        UserPojo userPojo = null;
-        Optional<User> userOptional = Optional.ofNullable(this.userRepository.findByEmail(username));
-        Optional<Customer> customerOptional = Optional.ofNullable(this.customerRepository.findByEmail(username));
+        UserPojo user = findUserByEmail(username);
 
+        if (user ==null) {
+            throw new UsernameNotFoundException("User not found");
+        }
+
+        UserPrincipal userPrincipal = new UserPrincipal(user);
+
+        return userPrincipal;
+    }
+
+
+    public UserPojo findUserByEmail(String email){
+        UserPojo userPojo = null;
+        Optional<User> userOptional = Optional.ofNullable(this.userRepository.findByEmail(email));
+        Optional<Customer> customerOptional = Optional.ofNullable(this.customerRepository.findByEmail(email));
 
         if (userOptional.isPresent()){
             userPojo = UserPojo.builder().
@@ -47,12 +59,8 @@ public class UserPrincipalDetailsService implements UserDetailsService {
                     password(customerOptional.get().getPassword()).
                     roles(Arrays.asList(new Role("ROLE_USER"))).
                     build();
-        }else {
-            throw new UsernameNotFoundException("User nicht gefunden");
         }
 
-
-        UserPrincipal userPrincipal = new UserPrincipal(userPojo);
-        return userPrincipal;
+        return userPojo;
     }
 }
