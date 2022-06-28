@@ -31,7 +31,7 @@ public class DbInit implements CommandLineRunner {
         this.customerRepository.deleteAll();
 
         // Crete users
-        Customer kunde = new Customer("dan", "hdf", "kunde@gmail.com", passwordEncoder.encode("kunde"));
+        Customer kunde = new Customer("julian", "meilinger", "kunde@gmail.com", passwordEncoder.encode("Passwort1!"));
 
 
         // Save to db
