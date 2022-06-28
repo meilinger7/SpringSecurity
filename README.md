@@ -1,3 +1,3 @@
 # SpringSecurity
 
-much du lappen
+Login und Registrierung mit Spring Security
